@@ -1,0 +1,182 @@
+**** Memory Management
+
+Q: How does Python handle memory allocation for variables and objects?
+A: Python uses a private heap space to manage memory. Objects and data structures are stored in this heap, and the Python memory manager handles allocation and deallocation.
+
+Q: What is a memory leak, and how can it happen in Python?
+A: A memory leak occurs when memory is not released even though it's no longer needed. In Python, it can happen through circular references or lingering global references that prevent garbage collection.
+
+Q: What is the Global Interpreter Lock (GIL), and how does it affect memory management in Python?
+A: The GIL is a mutex that allows only one thread to execute Python bytecode at a time. While it simplifies memory management, it restricts the performance of multi-threaded applications.
+
+Q: How does Python manage memory for different data types (integers, strings, lists, etc.)?
+A: Python uses different memory strategies: small integers and short strings are cached; lists and dicts are dynamically resized; and immutable types are often reused to save memory.
+
+**** Garbage Collection
+
+Q: What is garbage collection in Python, and how does it work?
+A: Garbage collection is the automatic process of deallocating memory used by objects no longer in use. Python uses reference counting and a cyclic garbage collector to manage this.
+
+Q: What are the different strategies Python uses to manage memory and remove unused objects?
+A: Python combines reference counting with a cyclic garbage collector to detect and clean up unreachable circular references.
+
+Q: How does Python’s garbage collector identify and reclaim unused objects?
+A: It tracks object references and uses a generational approach to check objects in cycles. If an object has no references, or only references in a cycle, it is considered garbage.
+
+Q: Can you explain what the gc module is and how it can be used to control garbage collection?
+A: The gc module allows developers to manually trigger garbage collection, disable it, or inspect collected and uncollected objects for debugging.
+
+**** Reference Counting
+
+Q: What is reference counting in Python, and how does it relate to memory management?
+A: Each object keeps a count of how many references point to it. When the count reaches zero, the memory is automatically released.
+
+Q: How does Python keep track of the number of references to an object?
+A: Internally, each object has a reference count that is updated as variables reference or dereference it.
+
+Q: What happens to an object’s memory when its reference count reaches zero?
+A: Python immediately deallocates the object and reclaims the memory.
+
+Q: Can you describe a situation where reference counting could fail in Python?
+A: Reference counting fails in the case of circular references where objects reference each other, preventing their count from reaching zero.
+
+**** Dynamic Typing
+
+Q: What is dynamic typing in Python, and how does it differ from static typing?
+A: In dynamic typing, the variable type is determined at runtime, not declared beforehand. This contrasts with static typing where type is fixed at compile-time.
+
+Q: How does Python internally store the type of a variable when using dynamic typing?
+A: Each object stores its type information internally, which Python uses to enforce correct operations at runtime.
+
+Q: What are the pros and cons of dynamic typing in Python?
+A: Pros include flexibility and faster development; cons include potential for runtime errors and reduced performance.
+
+Q: How does Python handle type checking during runtime?
+A: Python evaluates the types of objects when operations are executed, not when variables are assigned.
+
+**** Mutable & Immutable Objects
+
+Q: What is the difference between mutable and immutable objects in Python?
+A: Mutable objects can be modified after creation (e.g., lists). Immutable objects cannot be changed once created (e.g., strings, integers).
+
+Q: How does the mutability of an object affect its behavior in Python?
+A: Mutable objects can have unintended side effects if shared across functions, whereas immutable objects are safer due to their fixed nature.
+
+Q: Can you give examples of mutable and immutable objects in Python?
+A: Mutable: list, dict, set
+Immutable: int, str, tuple, frozenset
+
+Q: How do mutable and immutable objects impact memory management in Python?
+A: Immutable objects can be safely reused and cached, while mutable objects require more cautious memory handling.
+
+**** Memory Profiling
+
+Q: What tools or techniques can be used to profile memory usage in a Python program?
+A: Common tools include memory_profiler, tracemalloc, and objgraph.
+
+Q: How can you measure the memory footprint of a Python object?
+A: You can use functions like sys.getsizeof() or memory profiling tools to measure the memory size of an object.
+
+Q: What is the memory_profiler module, and how can it be used to analyze memory usage?
+A: It's a Python module that tracks memory usage of code line by line, useful for identifying memory bottlenecks.
+
+Q: What are some common strategies for optimizing memory usage in Python applications?
+A: Use generators, avoid unnecessary object duplication, release memory, and use efficient data structures.
+
+**** Deep Copy vs Shallow Copy
+
+Q: What is the difference between a shallow copy and a deep copy in Python?
+A: Shallow copy copies the outer object, while deep copy recursively copies all nested elements as well.
+
+Q: When would you use shallow copy vs deep copy?
+A: Shallow copy is used when internal elements don’t need to be duplicated. Deep copy is used when full independence is needed.
+
+Q: How do shallow and deep copies affect mutable objects?
+A: Shallow copies may share inner objects, leading to unintended changes. Deep copies avoid this by duplicating all objects.
+
+Q: Can you explain how copying works with nested lists or dictionaries?
+A: Shallow copy replicates only the outer container. Deep copy duplicates every inner element, ensuring no shared references.
+
+**** Optimization Tips for Python Code
+
+Q: How can you optimize the performance of Python code to reduce memory usage?
+A: Use lazy evaluation, minimize global variables, avoid large temporary structures, and prefer efficient data structures.
+
+Q: What are some best practices for writing memory-efficient Python code?
+A: Use generators, reuse variables, avoid unnecessary list copying, close unused file handles.
+
+Q: How do generators help in reducing memory consumption in Python?
+A: Generators yield items one at a time without storing the entire dataset in memory.
+
+Q: How can you optimize loops and list comprehensions in Python for better memory usage?
+A: Use generator expressions instead of list comprehensions when you don’t need to store the entire result.
+
+**** Optimization Tips for Python Code (continued)
+
+Q: How does Python store integers in memory, and what is the significance of small integer caching?
+A: Python pre-allocates integers from -5 to 256 and reuses them to save memory and improve speed.
+
+Q: How does the memory layout of integers in Python differ from other data types like strings or lists?
+A: Integers are stored with fixed size and metadata, while strings and lists have dynamic sizes and more overhead.
+
+Q: What happens when you create a large integer in Python? Does Python handle it differently than small integers?
+A: Yes, large integers are not cached. Python allocates fresh memory for them, which uses more space and time.
+
+Q: Can you explain how Python uses the sys.getsizeof() function to measure the memory size of integers?
+A: sys.getsizeof() returns the size of the integer object in bytes, including the overhead for type and reference info.
+
+**** Testing in Python
+
+Q: Why is testing important in Python software development?
+A: It ensures code reliability, catches bugs early, enables safe refactoring, and supports continuous integration.
+
+Q: What is the difference between unit testing, integration testing, and system testing in Python?
+A:
+
+Unit testing: Tests individual components
+
+Integration testing: Tests interactions between modules
+
+System testing: Tests the entire application as a whole
+
+**** Testing with Pytest
+
+Q: How do you write and run tests using the pytest framework?
+A: You define test functions prefixed with test_, and run them using the pytest command.
+
+Q: What are some common pytest fixtures, and how do they help in organizing tests?
+A: Fixtures are reusable components for setting up test data or environments. They help reduce duplication and maintain clarity.
+
+Q: How can you group tests in pytest and execute only a specific group?
+A: Use markers like @pytest.mark.smoke and run tests using -m with the marker name.
+
+Q: What are some advantages of using pytest over other testing frameworks like unittest?
+A: Pytest has simpler syntax, powerful fixtures, better output, and plugin support.
+
+**** DocTests
+
+Q: What is a doctest in Python, and how does it help in testing code?
+A: A doctest runs code examples embedded in docstrings to verify correctness. It ensures documentation and behavior are in sync.
+
+Q: How can you write a doctest for a function in Python?
+A: Include example usage in the function’s docstring with input and expected output.
+
+Q: How do doctests differ from regular unit tests, and when should you use them?
+A: Doctests are for simple checks and documentation validation. Unit tests are more flexible and robust.
+
+Q: How do you run doctests in Python?
+A: By running the script directly or using doctest.testmod() in the module.
+
+**** Unit Tests
+
+Q: What is unit testing in Python, and why is it essential?
+A: Unit testing verifies that individual parts of a program work as expected. It reduces bugs and simplifies debugging.
+
+Q: How do you write unit tests in Python?
+A: By creating test classes and methods using the unittest module, with assertions to check correctness.
+
+Q: What is the purpose of test suites in Python, and how do you organize them?
+A: A test suite is a collection of test cases. Organizing them improves maintainability and allows grouped execution.
+
+Q: How can you mock dependencies in unit tests to isolate the code being tested?
+A: Use the unittest.mock module to replace real dependencies with mock objects during testing.
