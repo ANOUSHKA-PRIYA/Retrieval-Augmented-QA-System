@@ -23,8 +23,8 @@ def setup_rag_pipeline():
     # Store embeddings in an in-memory Chroma vector store
     vectordb = Chroma.from_documents(chunks, embedding_model)
 
-    # Load the LLM (using Ollama's local gemma3:1b model)
-    llm_model = OllamaLLM(model="gemma3:1b")
+    # Load the LLM (using Ollama's local gemma2:2b model)
+    llm_model = OllamaLLM(model="gemma2:2b")
 
     # Define a custom prompt template for QA
     custom_prompt = PromptTemplate(
